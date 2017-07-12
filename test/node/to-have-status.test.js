@@ -1,3 +1,6 @@
+const http = require('http');
+const { URL } = require('url');
+
 const axios = require('axios');
 const request = require('request');
 
@@ -31,6 +34,21 @@ describe('.toHaveStatus', () => {
           url: `${baseUrl()}/status/200`,
         },
         (err, response, body) => {
+          expect(response).toHaveStatus(200);
+          done();
+        }
+      );
+    });
+
+    it('vanilla node', done => {
+      const url = new URL(baseUrl());
+      http.get(
+        {
+          host: url.hostname,
+          port: url.port,
+          path: '/status/200',
+        },
+        response => {
           expect(response).toHaveStatus(200);
           done();
         }
