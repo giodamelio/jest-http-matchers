@@ -4,6 +4,7 @@ const { URL } = require('url');
 const axios = require('axios');
 const request = require('request');
 const superagent = require('superagent');
+const fetch = require('node-fetch');
 
 const httpMatchers = require('../../src');
 const createServer = require('./createServer');
@@ -43,6 +44,12 @@ describe('.toHaveStatus', () => {
 
     it('superagent', () => {
       return superagent.get(`${baseUrl()}/status/200`).then(response => {
+        expect(response).toHaveStatus(200);
+      });
+    });
+
+    it('fetch', () => {
+      return fetch(`${baseUrl()}/status/200`).then(response => {
         expect(response).toHaveStatus(200);
       });
     });
