@@ -13,7 +13,8 @@
   "devDependencies": {
     "axios": "^0.16.2",
     "express": "^4.15.3",
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "request": "^2.81.0"
   },
   "jest": {
     "testEnvironment": "node"

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const request = require('request');
 
 const httpMatchers = require('../../src');
 const createServer = require('./createServer');
@@ -21,6 +22,19 @@ describe('.toHaveStatus', () => {
       }).then(response => {
         expect(response).toHaveStatus(200);
       });
+    });
+
+    it('request', done => {
+      request(
+        {
+          method: 'GET',
+          url: `${baseUrl()}/status/200`,
+        },
+        (err, response, body) => {
+          expect(response).toHaveStatus(200);
+          done();
+        }
+      );
     });
   });
 });
