@@ -3,5 +3,19 @@
   "version": "0.1.0",
   "main": "src/index.js",
   "author": "Gio d'Amelio <giodamelio@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jest-matcher-utils": "^20.0.3"
+  },
+  "devDependencies": {
+    "axios": "^0.16.2",
+    "express": "^4.15.3",
+    "jest": "^20.0.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
