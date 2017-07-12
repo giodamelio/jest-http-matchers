@@ -1,7 +1,7 @@
 const express = require('express');
 
 module.exports = function() {
-  let server;
+  let server, port;
   const app = express();
 
   app.get('/', (req, res) => {
@@ -17,12 +17,16 @@ module.exports = function() {
     start() {
       return new Promise((resolve, reject) => {
         server = app.listen(0, () => {
-          resolve(server.address().port);
+          port = server.address().port;
+          resolve();
         });
       });
     },
     stop() {
       server.close();
+    },
+    baseUrl() {
+      return `http://localhost:${port}`;
     },
   };
 };

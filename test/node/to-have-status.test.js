@@ -1,5 +1,4 @@
 const axios = require('axios');
-const express = require('express');
 
 const httpMatchers = require('../../src');
 const createServer = require('./createServer');
@@ -8,19 +7,20 @@ const createServer = require('./createServer');
 expect.extend(httpMatchers);
 
 // Start a simple server for testing purposes
-const { start, stop } = createServer();
-let PORT;
-beforeAll(() => start().then(port => (PORT = port)));
+const { start, stop, baseUrl } = createServer();
+beforeAll(start);
 afterAll(stop);
 
 describe('.toHaveStatus', () => {
-  it('should match status code', () => {
-    return axios({
-      method: 'GET',
-      url: `http://localhost:${PORT}/status/200`,
-      validateStatus: () => true, // Make all requests resolve promise
-    }).then(response => {
-      expect(response).toHaveStatus(200);
+  describe('should match status code', () => {
+    it('axios', () => {
+      return axios({
+        method: 'GET',
+        url: `${baseUrl()}/status/200`,
+        validateStatus: () => true, // Make all requests resolve promise
+      }).then(response => {
+        expect(response).toHaveStatus(200);
+      });
     });
   });
 });
