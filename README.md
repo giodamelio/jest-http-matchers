@@ -1,5 +1,7 @@
 # Jest Http Matchers
 
+[![Build Status](https://travis-ci.org/giodamelio/jest-http-matchers.svg?branch=master)](https://travis-ci.org/giodamelio/jest-http-matchers)
+
 Matchers to help test http responses
 
 ## Install
