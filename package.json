@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest",
 
+    "prepush": "yarn test",
     "commitmsg": "validate-commit-msg"
   },
   "dependencies": {
