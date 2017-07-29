@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint src/ test/",
-
+    "coverage": "npm test -- --coverage",
     "commitmsg": "validate-commit-msg",
     "precommit": "npm run lint",
     "prepush": "npm run test"
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "axios": "^0.16.2",
+    "codecov": "^2.2.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^3.19.0 || ^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",
