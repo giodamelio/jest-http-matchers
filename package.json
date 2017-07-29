@@ -6,9 +6,11 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "lint": "eslint src/ test/",
 
-    "prepush": "yarn test",
-    "commitmsg": "validate-commit-msg"
+    "commitmsg": "validate-commit-msg",
+    "precommit": "npm run lint",
+    "prepush": "npm run test"
   },
   "dependencies": {
     "jest-matcher-utils": "^20.0.3"
@@ -16,10 +18,16 @@
   "devDependencies": {
     "axios": "^0.16.2",
     "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^3.19.0 || ^4.3.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "express": "^4.15.3",
     "husky": "^0.14.3",
     "jest": "^20.0.4",
     "node-fetch": "^1.7.1",
+    "prettier": "^1.5.3",
     "request": "^2.81.0",
     "superagent": "^3.5.2",
     "validate-commit-msg": "^2.14.0"

@@ -19,15 +19,14 @@ afterAll(stop);
 
 describe('.toHaveStatus', () => {
   describe('should match 200 status code', () => {
-    it('axios', () => {
-      return axios({
+    it('axios', () =>
+      axios({
         method: 'GET',
         url: `${baseUrl()}/status/200`,
         validateStatus: () => true, // Make all requests resolve promise
       }).then(response => {
         expect(response).toHaveStatus(200);
-      });
-    });
+      }));
 
     it('request', done => {
       request(
@@ -35,24 +34,22 @@ describe('.toHaveStatus', () => {
           method: 'GET',
           url: `${baseUrl()}/status/200`,
         },
-        (err, response, body) => {
+        (err, response) => {
           expect(response).toHaveStatus(200);
           done();
         }
       );
     });
 
-    it('superagent', () => {
-      return superagent.get(`${baseUrl()}/status/200`).then(response => {
+    it('superagent', () =>
+      superagent.get(`${baseUrl()}/status/200`).then(response => {
         expect(response).toHaveStatus(200);
-      });
-    });
+      }));
 
-    it('fetch', () => {
-      return fetch(`${baseUrl()}/status/200`).then(response => {
+    it('fetch', () =>
+      fetch(`${baseUrl()}/status/200`).then(response => {
         expect(response).toHaveStatus(200);
-      });
-    });
+      }));
 
     it('vanilla node', done => {
       const url = new URL(baseUrl());
@@ -71,15 +68,14 @@ describe('.toHaveStatus', () => {
   });
 
   describe('should match 400 status code', () => {
-    it('axios', () => {
-      return axios({
+    it('axios', () =>
+      axios({
         method: 'GET',
         url: `${baseUrl()}/status/400`,
         validateStatus: () => true, // Make all requests resolve promise
       }).then(response => {
         expect(response).toHaveStatus(400);
-      });
-    });
+      }));
 
     it('request', done => {
       request(
@@ -87,24 +83,22 @@ describe('.toHaveStatus', () => {
           method: 'GET',
           url: `${baseUrl()}/status/400`,
         },
-        (err, response, body) => {
+        (err, response) => {
           expect(response).toHaveStatus(400);
           done();
         }
       );
     });
 
-    it('superagent', () => {
-      return superagent.get(`${baseUrl()}/status/400`).catch(response => {
+    it('superagent', () =>
+      superagent.get(`${baseUrl()}/status/400`).catch(response => {
         expect(response).toHaveStatus(400);
-      });
-    });
+      }));
 
-    it('fetch', () => {
-      return fetch(`${baseUrl()}/status/400`).then(response => {
+    it('fetch', () =>
+      fetch(`${baseUrl()}/status/400`).then(response => {
         expect(response).toHaveStatus(400);
-      });
-    });
+      }));
 
     it('vanilla node', done => {
       const url = new URL(baseUrl());

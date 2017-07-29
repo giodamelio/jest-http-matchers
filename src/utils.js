@@ -1,6 +1,7 @@
+/* eslint-disable prefer-template */
 const matcherUtils = require('jest-matcher-utils');
 
-module.exports.createMessage = function(
+function createMessage(
   matcherContext,
   message,
   name,
@@ -17,4 +18,8 @@ module.exports.createMessage = function(
     `  ${matcherUtils.printReceived(received)}` +
     after
   );
+}
+
+module.exports = {
+  createMessage,
 };

@@ -1,7 +1,8 @@
 const express = require('express');
 
-module.exports = function() {
-  let server, port;
+module.exports = function createServer() {
+  let server;
+  let port;
   const app = express();
 
   app.get('/', (req, res) => {
@@ -15,7 +16,7 @@ module.exports = function() {
 
   return {
     start() {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         server = app.listen(0, () => {
           port = server.address().port;
           resolve();
