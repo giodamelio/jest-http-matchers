@@ -121,4 +121,10 @@ describe('.toHaveStatus', () => {
       );
     });
   });
+
+  it('have status property', () => {
+    expect(() => {
+      expect({}).toHaveStatus(200);
+    }).toThrow(/Expected request to have status property/);
+  });
 });
