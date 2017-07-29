@@ -1,5 +1,5 @@
 const http = require('http');
-const { URL } = require('url');
+const url = require('url');
 
 const axios = require('axios');
 const request = require('request');
@@ -52,11 +52,11 @@ describe('.toHaveStatus', () => {
       }));
 
     it('vanilla node', done => {
-      const url = new URL(baseUrl());
+      const parsedUrl = url.parse(baseUrl());
       http.get(
         {
-          host: url.hostname,
-          port: url.port,
+          host: parsedUrl.hostname,
+          port: parsedUrl.port,
           path: '/status/200',
         },
         response => {
@@ -101,11 +101,11 @@ describe('.toHaveStatus', () => {
       }));
 
     it('vanilla node', done => {
-      const url = new URL(baseUrl());
+      const parsedUrl = url.parse(baseUrl());
       http.get(
         {
-          host: url.hostname,
-          port: url.port,
+          host: parsedUrl.hostname,
+          port: parsedUrl.port,
           path: '/status/400',
         },
         response => {
