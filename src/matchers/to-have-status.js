@@ -20,8 +20,9 @@ module.exports = function toHaveStatus(received, expected) {
     return {
       pass: true,
       message: utils.createMessage(
+        this,
         'Expected response not to have a status of:',
-        '.not.toHaveStatus',
+        'toHaveStatus',
         expected,
         status
       ),
@@ -31,8 +32,9 @@ module.exports = function toHaveStatus(received, expected) {
   return {
     pass: false,
     message: utils.createMessage(
+      this,
       'Expected response to have a status of:',
-      '.toHaveStatus',
+      'toHaveStatus',
       expected,
       status
     ),

@@ -1,7 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`create message 1`] = `
-"[2mexpect([22m[31mreceived[39m[2m)the.name.of.the.matcher([22m[32mexpected[39m[2m)[22m
+"[2mexpect([22m[31mreceived[39m[2m).matcherName([22m[32mexpected[39m[2m)[22m
+
+Expected test to do a thingy (totally, I promise)
+  [32m\\"expected thingy\\"[39m
+Received:
+  [31m\\"received thingy\\"[39m"
+`;
+
+exports[`create message with not applied 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).not.matcherName([22m[32mexpected[39m[2m)[22m
 
 Expected test to do a thingy (totally, I promise)
   [32m\\"expected thingy\\"[39m
