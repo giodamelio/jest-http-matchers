@@ -1,6 +1,6 @@
 const express = require('express');
 
-module.exports = function createServer() {
+function createServer() {
   let server;
   let port;
   const app = express();
@@ -31,4 +31,8 @@ module.exports = function createServer() {
       return `http://localhost:${port}`;
     },
   };
+}
+
+module.exports = {
+  createServer,
 };

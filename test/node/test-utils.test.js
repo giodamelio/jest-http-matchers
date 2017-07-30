@@ -1,6 +1,6 @@
 const superagent = require('superagent');
 
-const createServer = require('./create-server');
+const { createServer } = require('./test-utils');
 
 it('start and stop server', () => {
   const { start, stop } = createServer();
