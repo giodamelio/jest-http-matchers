@@ -116,6 +116,65 @@ describe('.toHaveStatus', () => {
     });
   });
 
+  describe('should not match code', () => {
+    it('axios', () =>
+      axios({
+        method: 'GET',
+        url: `${baseUrl()}/status/400`,
+        validateStatus: () => true, // Make all requests resolve promise
+      }).then(response => {
+        expect(() => {
+          expect(response).toHaveStatus(200);
+        }).toThrow(/Expected response to have a status of/);
+      }));
+
+    it('request', done => {
+      request(
+        {
+          method: 'GET',
+          url: `${baseUrl()}/status/400`,
+        },
+        (err, response) => {
+          expect(() => {
+            expect(response).toHaveStatus(200);
+          }).toThrow(/Expected response to have a status of/);
+          done();
+        }
+      );
+    });
+
+    it('superagent', () =>
+      superagent.get(`${baseUrl()}/status/400`).catch(response => {
+        expect(() => {
+          expect(response).toHaveStatus(200);
+        }).toThrow(/Expected response to have a status of/);
+      }));
+
+    it('fetch', () =>
+      fetch(`${baseUrl()}/status/400`).then(response => {
+        expect(() => {
+          expect(response).toHaveStatus(200);
+        }).toThrow(/Expected response to have a status of/);
+      }));
+
+    it('vanilla node', done => {
+      const parsedUrl = url.parse(baseUrl());
+      http.get(
+        {
+          host: parsedUrl.hostname,
+          port: parsedUrl.port,
+          path: '/status/400',
+        },
+        response => {
+          expect(() => {
+            expect(response).toHaveStatus(200);
+          }).toThrow(/Expected response to have a status of/);
+          done();
+        }
+      );
+    });
+  });
+
   it('have status property', () => {
     expect(() => {
       expect({}).toHaveStatus(200);
