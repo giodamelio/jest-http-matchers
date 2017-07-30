@@ -25,6 +25,7 @@ module.exports = function createServer() {
     },
     stop() {
       server.close();
+      return Promise.resolve();
     },
     baseUrl() {
       return `http://localhost:${port}`;

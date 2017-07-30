@@ -7,7 +7,7 @@ const superagent = require('superagent');
 const fetch = require('node-fetch');
 
 const httpMatchers = require('../../src');
-const createServer = require('./createServer');
+const createServer = require('./create-server');
 
 // Load our matchers
 expect.extend(httpMatchers);
