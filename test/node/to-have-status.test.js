@@ -7,172 +7,149 @@ const superagent = require('superagent');
 const fetch = require('node-fetch');
 
 const httpMatchers = require('../../src');
-const { createServer } = require('./test-utils');
+const { createTests } = require('./test-utils');
 
 // Load our matchers
 expect.extend(httpMatchers);
 
-// Start a simple server for testing purposes
-const { start, stop, baseUrl } = createServer();
-beforeAll(start);
-afterAll(stop);
-
 describe('.toHaveStatus', () => {
   describe('should match 200 status code', () => {
-    it('axios', () =>
-      axios({
-        method: 'GET',
-        url: `${baseUrl()}/status/200`,
-        validateStatus: () => true, // Make all requests resolve promise
-      }).then(response => {
+    createTests(
+      '/status/200',
+      response => {
         expect(response).toHaveStatus(200);
-      }));
-
-    it('request', done => {
-      request(
-        {
-          method: 'GET',
-          url: `${baseUrl()}/status/200`,
-        },
-        (err, response) => {
-          expect(response).toHaveStatus(200);
-          done();
-        }
-      );
-    });
-
-    it('superagent', () =>
-      superagent.get(`${baseUrl()}/status/200`).then(response => {
-        expect(response).toHaveStatus(200);
-      }));
-
-    it('fetch', () =>
-      fetch(`${baseUrl()}/status/200`).then(response => {
-        expect(response).toHaveStatus(200);
-      }));
-
-    it('vanilla node', done => {
-      const parsedUrl = url.parse(baseUrl());
-      http.get(
-        {
-          host: parsedUrl.hostname,
-          port: parsedUrl.port,
-          path: '/status/200',
-        },
-        response => {
-          expect(response).toHaveStatus(200);
-          done();
-        }
-      );
-    });
+      },
+      {
+        axios: path =>
+          axios({
+            method: 'GET',
+            url: path,
+          }),
+        request: path =>
+          new Promise((resolve, reject) => {
+            request(
+              {
+                method: 'GET',
+                url: path,
+              },
+              (err, response) => {
+                if (err) return reject(err);
+                return resolve(response);
+              }
+            );
+          }),
+        superagent: path => superagent.get(path),
+        fetch: path => fetch(path),
+        'vanilla node': path =>
+          new Promise(resolve => {
+            const parsedUrl = url.parse(path);
+            http.get(
+              {
+                host: parsedUrl.hostname,
+                port: parsedUrl.port,
+                path: parsedUrl.path,
+              },
+              response => {
+                resolve(response);
+              }
+            );
+          }),
+      }
+    );
   });
 
   describe('should match 400 status code', () => {
-    it('axios', () =>
-      axios({
-        method: 'GET',
-        url: `${baseUrl()}/status/400`,
-        validateStatus: () => true, // Make all requests resolve promise
-      }).then(response => {
+    createTests(
+      '/status/400',
+      response => {
         expect(response).toHaveStatus(400);
-      }));
-
-    it('request', done => {
-      request(
-        {
-          method: 'GET',
-          url: `${baseUrl()}/status/400`,
-        },
-        (err, response) => {
-          expect(response).toHaveStatus(400);
-          done();
-        }
-      );
-    });
-
-    it('superagent', () =>
-      superagent.get(`${baseUrl()}/status/400`).catch(response => {
-        expect(response).toHaveStatus(400);
-      }));
-
-    it('fetch', () =>
-      fetch(`${baseUrl()}/status/400`).then(response => {
-        expect(response).toHaveStatus(400);
-      }));
-
-    it('vanilla node', done => {
-      const parsedUrl = url.parse(baseUrl());
-      http.get(
-        {
-          host: parsedUrl.hostname,
-          port: parsedUrl.port,
-          path: '/status/400',
-        },
-        response => {
-          expect(response).toHaveStatus(400);
-          done();
-        }
-      );
-    });
+      },
+      {
+        axios: path =>
+          axios({
+            method: 'GET',
+            url: path,
+            validateStatus: () => true, // Make all requests resolve promise
+          }),
+        request: path =>
+          new Promise((resolve, reject) => {
+            request(
+              {
+                method: 'GET',
+                url: path,
+              },
+              (err, response) => {
+                if (err) return reject(err);
+                return resolve(response);
+              }
+            );
+          }),
+        superagent: path => superagent.get(path).ok(() => true), // Make all requests resolve promise
+        fetch: path => fetch(path),
+        'vanilla node': path =>
+          new Promise(resolve => {
+            const parsedUrl = url.parse(path);
+            http.get(
+              {
+                host: parsedUrl.hostname,
+                port: parsedUrl.port,
+                path: parsedUrl.path,
+              },
+              response => {
+                resolve(response);
+              }
+            );
+          }),
+      }
+    );
   });
 
   describe('should not match code', () => {
-    it('axios', () =>
-      axios({
-        method: 'GET',
-        url: `${baseUrl()}/status/400`,
-        validateStatus: () => true, // Make all requests resolve promise
-      }).then(response => {
+    createTests(
+      '/status/400',
+      response => {
         expect(() => {
           expect(response).toHaveStatus(200);
         }).toThrow(/Expected response to have a status of/);
-      }));
-
-    it('request', done => {
-      request(
-        {
-          method: 'GET',
-          url: `${baseUrl()}/status/400`,
-        },
-        (err, response) => {
-          expect(() => {
-            expect(response).toHaveStatus(200);
-          }).toThrow(/Expected response to have a status of/);
-          done();
-        }
-      );
-    });
-
-    it('superagent', () =>
-      superagent.get(`${baseUrl()}/status/400`).catch(response => {
-        expect(() => {
-          expect(response).toHaveStatus(200);
-        }).toThrow(/Expected response to have a status of/);
-      }));
-
-    it('fetch', () =>
-      fetch(`${baseUrl()}/status/400`).then(response => {
-        expect(() => {
-          expect(response).toHaveStatus(200);
-        }).toThrow(/Expected response to have a status of/);
-      }));
-
-    it('vanilla node', done => {
-      const parsedUrl = url.parse(baseUrl());
-      http.get(
-        {
-          host: parsedUrl.hostname,
-          port: parsedUrl.port,
-          path: '/status/400',
-        },
-        response => {
-          expect(() => {
-            expect(response).toHaveStatus(200);
-          }).toThrow(/Expected response to have a status of/);
-          done();
-        }
-      );
-    });
+      },
+      {
+        axios: path =>
+          axios({
+            method: 'GET',
+            url: path,
+            validateStatus: () => true, // Make all requests resolve promise
+          }),
+        request: path =>
+          new Promise((resolve, reject) => {
+            request(
+              {
+                method: 'GET',
+                url: path,
+              },
+              (err, response) => {
+                if (err) return reject(err);
+                return resolve(response);
+              }
+            );
+          }),
+        superagent: path => superagent.get(path).ok(() => true), // Make all requests resolve promise
+        fetch: path => fetch(path),
+        'vanilla node': path =>
+          new Promise(resolve => {
+            const parsedUrl = url.parse(path);
+            http.get(
+              {
+                host: parsedUrl.hostname,
+                port: parsedUrl.port,
+                path: parsedUrl.path,
+              },
+              response => {
+                resolve(response);
+              }
+            );
+          }),
+      }
+    );
   });
 
   it('have status property', () => {

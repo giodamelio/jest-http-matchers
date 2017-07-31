@@ -33,6 +33,20 @@ function createServer() {
   };
 }
 
+function createTests(path, assertionsCallback, requesters) {
+  const { start, stop, baseUrl } = createServer();
+  beforeAll(start);
+  afterAll(stop);
+
+  Object.keys(requesters).forEach(requester => {
+    it(`${requester}`, () =>
+      requesters[requester](`${baseUrl()}${path}`).then(response => {
+        assertionsCallback(response);
+      }));
+  });
+}
+
 module.exports = {
   createServer,
+  createTests,
 };
