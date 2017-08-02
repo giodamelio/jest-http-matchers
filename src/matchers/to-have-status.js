@@ -1,5 +1,7 @@
 'use strict';
 
+const os = require('os');
+
 const matcherUtils = require('jest-matcher-utils');
 
 const utils = require('../utils');
@@ -10,7 +12,7 @@ module.exports = function toHaveStatus(received, expected) {
   if (!status) {
     return {
       pass: false,
-      message: `Expected request to have status property\n\n${matcherUtils.printReceived(
+      message: `Expected request to have status property${os.EOL}${os.EOL}${matcherUtils.printReceived(
         received
       )}`,
     };
