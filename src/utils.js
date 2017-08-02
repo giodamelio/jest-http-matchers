@@ -1,3 +1,5 @@
+'use strict';
+
 /* eslint-disable prefer-template */
 const matcherUtils = require('jest-matcher-utils');
 

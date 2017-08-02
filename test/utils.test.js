@@ -1,3 +1,5 @@
+'use strict';
+
 const { createMessage } = require('../src/utils');
 
 it('create message', () => {

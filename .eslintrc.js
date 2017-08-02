@@ -1,9 +1,9 @@
 module.exports = {
-  extends: ['airbnb-base', 'prettier'],
-  plugins: ['prettier'],
+  extends: ['airbnb-base', 'plugin:import/recommended', 'prettier'],
+  plugins: ['prettier', 'import'],
   parserOptions: {
     ecmaVersion: 2016,
-    sourceType: 'module',
+    sourceType: 'script',
   },
   env: {
     node: true,
@@ -16,5 +16,10 @@ module.exports = {
         trailingComma: 'es5',
       },
     ],
+    'import/order': [
+      'error',
+      { 'newlines-between': 'always-and-inside-groups' },
+    ],
+    'import/first': 'error',
   },
 };

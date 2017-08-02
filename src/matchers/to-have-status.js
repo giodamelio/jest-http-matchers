@@ -1,3 +1,5 @@
+'use strict';
+
 const matcherUtils = require('jest-matcher-utils');
 
 const utils = require('../utils');

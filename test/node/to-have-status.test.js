@@ -1,3 +1,5 @@
+'use strict';
+
 const http = require('http');
 const url = require('url');
 
@@ -7,6 +9,7 @@ const superagent = require('superagent');
 const fetch = require('node-fetch');
 
 const httpMatchers = require('../../src');
+
 const { createTests } = require('./test-utils');
 
 // Load our matchers
